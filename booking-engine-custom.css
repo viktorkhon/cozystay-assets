@@ -38,4 +38,13 @@ h1,h2{font-family:'Fraunces',Georgia,serif!important;letter-spacing:-.01em}
 main:has(>div>aside #booking-widget-form)>div:has(>aside #booking-widget-form)>*:not(aside){display:none!important}
 main:has(>div>aside #booking-widget-form)>div:has(>aside #booking-widget-form){display:block!important;max-width:600px!important;margin:32px auto 48px!important;padding:0 16px!important}
 main:has(>div>aside #booking-widget-form) aside{position:static!important;width:100%!important;max-width:none!important;top:auto!important}
-#booking-widget-form{border-radius:18px!important;box-shadow:0 10px 30px rgba(0,0,0,.08)!important;border:1px solid #e3e8e6!important}
+/* one white card with real padding (r17: fields were touching the edge) */
+#booking-widget-form{border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important}
+main:has(>div>aside #booking-widget-form) aside{padding:28px 30px!important;border-radius:20px!important;box-shadow:0 10px 30px rgba(0,0,0,.08)!important;border:1px solid #e3e8e6!important}
+@media(max-width:600px){main:has(>div>aside #booking-widget-form) aside{padding:20px 16px!important}}
+
+/* ---------- Payment step (Stripe card form) ---------- */
+/* no exits mid-payment: hide the header menu (Home / Book Now) and footer; same 'Secure booking' label */
+#main-container:has(iframe[name^="__privateStripeFrame"])>header nav,#main-container:has(iframe[name^="__privateStripeFrame"])>footer{display:none!important}
+#main-container:has(iframe[name^="__privateStripeFrame"])>header{position:relative;min-height:64px}
+#main-container:has(iframe[name^="__privateStripeFrame"])>header::after{content:"\1F512  Secure booking";position:absolute;right:24px;top:50%;transform:translateY(-50%);color:#fff;font-size:14px;font-weight:600;opacity:.9}
