@@ -1,0 +1,41 @@
+/*
+  Cozy Stay Lodges – custom CSS for the Hostfully booking engine (book.cozystaylodges.com)
+  Where it goes: Hostfully PMS > Agency Settings > White Labeling > "CSS URL" (must be a public https URL that serves this file
+  as text/css, e.g. GitHub Pages; raw Gist links are text/plain and browsers ignore them).
+  Hostfully's support assistant (2026-11-05): CSS customization is supported for white-label sites, but there is NO official list
+  of class names. This file only targets stable IDs/elements seen on 2026-11-05: #main-container, header, footer,
+  #search-filter-form, #booking-widget-form, section#information. Re-check after Hostfully updates the booking engine.
+  Brand colours are set natively in PMS > Direct Booking Engine > Website Settings > Brand colors (#1E4D45 / #B5501C);
+  the variables below are a fallback.
+
+  v2 (round 16, T96): LEAN CHECKOUT. Guests reach this page from the booking bar on cozystaylodges.com (dates already chosen), so the
+  property page shows ONLY the booking card (no heading: our frame header already says 'Secure payment') (guest details + price + Book Now). Photos, tabs and long sections are hidden.
+  Scoped with :has(#booking-widget-form) so the booking engine's search/home pages are untouched.
+  Payment steps (/payment/...) only get the shared brand styling until they have been checked by hand.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap');
+
+:root{--hf-colors-primary:#1E4D45!important;--hf-colors-secondary:#B5501C!important}
+body{background:#FAF7F2!important}
+
+/* ---------- Header + footer (all pages) ---------- */
+#main-container>header,#main-container>footer{background:#1E4D45!important}
+#main-container>header a{color:#fff!important}
+/* single property: the multi-property "Where / When / Who" search bar is noise */
+.is-sticky:has(#search-filter-form),#search-filter-form,.mobile-search-toggle{display:none!important}
+/* primary buttons: Ember, the only "book" colour on the site */
+#booking-widget-form fieldset>button,#booking-widget-form button[type=submit]{background:#B5501C!important;border-color:#B5501C!important;color:#fff!important;font-weight:700!important;border-radius:12px!important;min-height:48px}
+#booking-widget-form fieldset>button:hover,#booking-widget-form button[type=submit]:hover{background:#A8471A!important}
+h1,h2{font-family:'Fraunces',Georgia,serif!important;letter-spacing:-.01em}
+
+/* ---------- Lean checkout on the property page ---------- */
+/* no exits mid-checkout: hide the header nav (Home / Book Now) and the footer */
+#main-container:has(#booking-widget-form)>header nav,#main-container:has(#booking-widget-form)>footer{display:none!important}
+#main-container:has(#booking-widget-form)>header{min-height:64px}
+#main-container:has(#booking-widget-form)>header::after{content:"\1F512  Secure booking";position:absolute;right:24px;top:50%;transform:translateY(-50%);color:#fff;font-size:14px;font-weight:600;opacity:.9}
+#main-container:has(#booking-widget-form)>header{position:relative}
+/* hide everything next to the booking card (title + photos, tabs, description, amenities, calendar, map, reviews) */
+main:has(>div>aside #booking-widget-form)>div:has(>aside #booking-widget-form)>*:not(aside){display:none!important}
+main:has(>div>aside #booking-widget-form)>div:has(>aside #booking-widget-form){display:block!important;max-width:600px!important;margin:32px auto 48px!important;padding:0 16px!important}
+main:has(>div>aside #booking-widget-form) aside{position:static!important;width:100%!important;max-width:none!important;top:auto!important}
+#booking-widget-form{border-radius:18px!important;box-shadow:0 10px 30px rgba(0,0,0,.08)!important;border:1px solid #e3e8e6!important}
